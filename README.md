@@ -41,7 +41,7 @@ you expect before executing it, or copy and paste the command to execute it.
 
 ```sh
 $ terraform output ssh_command
-ssh -i ,/keys/fastai-dev-key ubuntu@127.0.0.1
+ssh -i ./keys/fastai-dev-key ubuntu@127.0.0.1
 
 $ $(terraform output ssh_command)
 ubuntu@ip-10-0-101-210:~$
