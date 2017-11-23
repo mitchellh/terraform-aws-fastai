@@ -15,15 +15,36 @@ generate a keypair or VPC.
 Usage
 -----
 
+Run `terraform apply` against the example configuration below:
+
 ```hcl
 provider "aws" {
   version = "~> 1.0.0"
   region  = "us-west-2"
 }
 
-module "vpc" {
+module "fastai" {
   source = "mitchellh/fastai/aws"
 }
+
+output "ssh_command" {
+  value = "${module.fastai.ssh_command}"
+}
+```
+
+After running it, inspect the output `ssh_command`. This will contain
+the SSH command to use to connect to the instance. On initial creation this
+may take up to a minute to connect successfully.
+
+**Note:** As a security precaution, please ensure that the command is what
+you expect before executing it, or copy and paste the command to execute it.
+
+```sh
+$ terraform output ssh_command
+ssh -i ,/keys/fastai-dev-key ubuntu@127.0.0.1
+
+$ $(terraform output ssh_command)
+ubuntu@ip-10-0-101-210:~$
 ```
 
 Terraform version
