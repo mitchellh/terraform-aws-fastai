@@ -42,7 +42,7 @@ resource "aws_instance" "instance" {
   }
 
   provisioner "remote-exec" {
-    script = "./setup.sh"
+    script = "${path.module}/setup.sh"
 
     connection {
       user        = "ubuntu"
