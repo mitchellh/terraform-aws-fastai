@@ -2,6 +2,10 @@ variable "key_name" {
   description = "AWS keypair name for SSH to the instance."
 }
 
+variable "private_key" {
+  description = "Private key contents. Use the file() interpolation to read files."
+}
+
 variable "vpc_id" {
   description = "VPC to create the instance in."
 }

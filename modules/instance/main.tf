@@ -40,6 +40,15 @@ resource "aws_instance" "instance" {
   tags = {
     Name = "Fast.ai Course Instance"
   }
+
+  provisioner "remote-exec" {
+    script = "./setup.sh"
+
+    connection {
+      user        = "ubuntu"
+      private_key = "${var.private_key}"
+    }
+  }
 }
 
 resource "aws_eip" "instance" {

@@ -35,4 +35,5 @@ module "instance" {
   subnet_id     = "${module.vpc.public_subnets[0]}"
   instance_type = "${var.instance_type}"
   key_name      = "${module.key.key_name}"
+  private_key   = "${file("./keys/fastai-dev-key")}"
 }
