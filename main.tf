@@ -23,21 +23,12 @@ module "vpc" {
   }
 }
 
-module "key" {
-  source              = "cloudposse/key-pair/aws"
-  namespace           = "fastai"
-  stage               = "dev"
-  name                = "key"
-  ssh_public_key_path = "./keys"
-  generate_ssh_key    = "true"
-}
-
 module "instance" {
   source        = "./modules/instance"
   vpc_id        = "${module.vpc.vpc_id}"
   subnet_id     = "${module.vpc.public_subnets[0]}"
   instance_type = "${var.instance_type}"
-  key_name      = "${module.key.key_name}"
+  key_name      = "${aws_key_pair.generated.key_name}"
   private_key   = "${tls_private_key.generated.private_key_pem}"
 }
 
@@ -45,7 +36,7 @@ module "instance" {
 // Resources
 
 locals {
-  public_key_filename = "${path.root}/keys/public.pub"
+  public_key_filename  = "${path.root}/keys/public.pub"
   private_key_filename = "${path.root}/keys/private.pem"
 }
 
@@ -56,14 +47,18 @@ resource "tls_private_key" "generated" {
 resource "aws_key_pair" "generated" {
   key_name   = "fastai-${uuid()}"
   public_key = "${tls_private_key.generated.public_key_openssh}"
+
+  lifecycle {
+    ignore_changes = ["key_name"]
+  }
 }
 
 resource "local_file" "public_key_openssh" {
-  content    = "${tls_private_key.generated.public_key_openssh}"
-  filename   = "${local.public_key_filename}"
+  content  = "${tls_private_key.generated.public_key_openssh}"
+  filename = "${local.public_key_filename}"
 }
 
 resource "local_file" "private_key_pem" {
-  content    = "${tls_private_key.generated.private_key_pem}"
-  filename   = "${local.private_key_filename}"
+  content  = "${tls_private_key.generated.private_key_pem}"
+  filename = "${local.private_key_filename}"
 }
