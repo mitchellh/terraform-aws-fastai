@@ -3,5 +3,5 @@ output "public_ip" {
 }
 
 output "ssh_command" {
-  value = "ssh -i ./keys/fastai-dev-key ubuntu@${module.instance.public_ip}"
+  value = "ssh -i ${local.private_key_filename} ubuntu@${module.instance.public_ip}"
 }
