@@ -62,3 +62,15 @@ resource "local_file" "private_key_pem" {
   content  = "${tls_private_key.generated.private_key_pem}"
   filename = "${local.private_key_filename}"
 }
+
+resource "null_resource" "chmod" {
+  depends_on = ["local_file.private_key_pem"]
+
+  triggers {
+    key = "${tls_private_key.generated.private_key_pem}"
+  }
+
+  provisioner "local-exec" {
+    command = "chmod 600 ${local.private_key_filename}"
+  }
+}
