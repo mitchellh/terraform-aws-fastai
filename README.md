@@ -12,6 +12,20 @@ For advanced usage, you may provide the VPC and other parameters by using
 the "modules/instance" nested module directly. This will not automatically
 generate a keypair or VPC.
 
+What This Module Does
+---------------------
+
+Features:
+
+  * Creates a VPC and all related VPC resources (subnets, internet gateways,
+    routing tables, etc.)
+
+  * Generates a temporary SSH keypair for accessing the created instance.
+    The keypair is placed into the "keys/" directory relative to the
+    root module.
+
+  * Launches a GPU (p2 class) EC2 instance using the official Fast.ai AMIs.
+
 Usage
 -----
 

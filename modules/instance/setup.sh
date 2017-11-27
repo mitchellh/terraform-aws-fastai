@@ -25,3 +25,8 @@ mv courses-master/deeplearning1/nbs/* nbs/
 # Remove the old data
 rm -rf courses-master/
 rm master.zip
+
+#--------------------------------------------------------------------
+# Kaggle
+
+pip install kaggle-cli
