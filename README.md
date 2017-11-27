@@ -61,6 +61,11 @@ $ $(terraform output ssh_command)
 ubuntu@ip-10-0-101-210:~$
 ```
 
+The SSH keys created are also in the `./keys` subdirectory relative to
+the root Terraform configuration if you need those for any other reason.
+These keys will be automatically deleted and removed when your configuration
+is destroyed (via `terraform destroy`).
+
 Terraform version
 -----------------
 
